@@ -33,6 +33,10 @@ namespace GLTFast
         /// <summary>
         /// <see href="https://docs.unity3d.com/Manual/AnimationOverview.html">Default Animation System (Mecanim)</see>
         /// </summary>
-        Mecanim
+        Mecanim,
+        /// <summary>
+        /// <see href="https://docs.unity3d.com/Manual/AvatarCreationandSetup.html">Custom Humanoid System</see>
+        /// </summary>
+        Humanoid
     }
 }

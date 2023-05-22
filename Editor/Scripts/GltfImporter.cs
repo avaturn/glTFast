@@ -33,6 +33,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using GLTFast.Avaturn;
 using GLTFast.Logging;
 using GLTFast.Utils;
 using UnityEditor;
@@ -191,8 +192,17 @@ namespace GLTFast.Editor
                     AddObjectToAsset(ctx, $"scenes/{sceneName}", sceneGo, gltfIcon);
                     if (sceneIndex == m_Gltf.DefaultSceneIndex)
                     {
+                        if (importSettings.AnimationMethod == AnimationMethod.Humanoid)
+                            sceneGo.AddComponent<Animator>();
                         ctx.SetMainObject(sceneGo);
                     }
+                }
+                
+                if (importSettings.AnimationMethod == AnimationMethod.Humanoid)
+                {
+                    var avatar = HumanoidAvatarBuilder.Build((GameObject) ctx.mainObject);
+                    AddObjectToAsset(ctx, $"avatar/{avatar.name}", avatar);
+                    ((GameObject) ctx.mainObject).GetComponent<Animator>().avatar = avatar;
                 }
 
                 for (var i = 0; i < m_Gltf.TextureCount; i++)
@@ -364,5 +374,4 @@ namespace GLTFast.Editor
         }
     }
 }
-
 #endif // !GLTFAST_EDITOR_IMPORT_OFF
